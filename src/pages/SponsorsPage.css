@@ -1,0 +1,105 @@
+.sponsors-page .page-intro {
+  max-width: 1000px;
+  margin-bottom: 58px;
+}
+
+.sponsors-page__lede {
+  max-width: 610px;
+  margin: 24px auto 0;
+  color: rgba(255, 255, 255, 0.66);
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+.sponsors {
+  width: min(960px, 100%);
+  margin-inline: auto;
+}
+
+.sponsors h2 {
+  margin-bottom: 26px;
+  color: rgba(207, 222, 244, 0.48);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-align: center;
+}
+
+.sponsors__list {
+  display: grid;
+  gap: 24px;
+}
+
+.sponsors .sponsor-card {
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  padding: 28px;
+  border: 0;
+  border-radius: 18px;
+  background: rgba(201, 235, 255, 0.04);
+}
+
+.sponsor-card--link {
+  transition: border-color 180ms ease, background-color 180ms ease, transform 180ms ease;
+}
+
+.sponsor-card--link:hover,
+.sponsor-card--link:focus-visible {
+  border-color: rgba(196, 216, 244, 0.3);
+  background: rgba(193, 217, 255, 0.075);
+  transform: translateY(-2px);
+}
+
+.sponsor-card__logo {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.sponsor-card__logo--aztech {
+  max-width: 904px;
+}
+
+.sponsor-card__logo--accu {
+  width: 520px;
+  max-width: 100%;
+}
+
+@media (max-width: 720px) {
+  .sponsors-page {
+    padding-top: 117px;
+  }
+
+  .sponsors-page .page-intro {
+    margin-bottom: 56px;
+  }
+
+  .sponsors-page .eyebrow {
+    margin-bottom: 20px;
+    font-size: 10px;
+    line-height: 12px;
+  }
+
+  .sponsors-page .page-intro h1 {
+    font-size: 44px;
+    line-height: 1.02;
+  }
+
+  .sponsors-page__lede {
+    margin-top: 20px;
+    font-size: 15px;
+  }
+
+  .sponsors h2 {
+    margin-bottom: 24px;
+    font-size: 10px;
+    line-height: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sponsor-card--link {
+    transition: none;
+  }
+}
