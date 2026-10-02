@@ -22,6 +22,7 @@ function PlaneIcon() {
 export default function Header() {
   const [open, setOpen] = useState(false)
   const location = useLocation()
+  const navigationRef = useRef<HTMLElement>(null)
   const toggleRef = useRef<HTMLButtonElement>(null)
   const firstLinkRef = useRef<HTMLAnchorElement>(null)
 
@@ -41,6 +42,23 @@ export default function Header() {
         setOpen(false)
         toggleRef.current?.focus()
       }
+
+      if (event.key === 'Tab' && open) {
+        const focusable = navigationRef.current?.querySelectorAll<HTMLElement>(
+          'button:not([disabled]), a[href]:not([tabindex="-1"])',
+        )
+        if (!focusable?.length) return
+
+        const first = focusable[0]
+        const last = focusable[focusable.length - 1]
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault()
+          last.focus()
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault()
+          first.focus()
+        }
+      }
     }
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
@@ -48,7 +66,7 @@ export default function Header() {
 
   return (
     <header className={`site-header ${open ? 'is-open' : ''}`}>
-      <nav className="navigation" aria-label="Primary navigation">
+      <nav ref={navigationRef} className="navigation" aria-label="Primary navigation">
         <div className="navigation__bar">
           <button
             ref={toggleRef}
@@ -69,26 +87,28 @@ export default function Header() {
         </div>
 
         <div id="navigation-menu" className="navigation__menu" aria-hidden={!open}>
-          <div className="navigation__links">
-            {navigation.map((item, index) => (
-              <NavLink
-                key={item.to}
-                ref={index === 0 ? firstLinkRef : undefined}
-                to={item.to}
-                tabIndex={open ? 0 : -1}
-                className={({ isActive }) => (isActive ? 'is-active' : '')}
-              >
-                {item.label}
-              </NavLink>
-            ))}
+          <div className="navigation__menu-inner">
+            <div className="navigation__links">
+              {navigation.map((item, index) => (
+                <NavLink
+                  key={item.to}
+                  ref={index === 0 ? firstLinkRef : undefined}
+                  to={item.to}
+                  tabIndex={open ? 0 : -1}
+                  className={({ isActive }) => (isActive ? 'is-active' : '')}
+                >
+                  {item.label}
+                </NavLink>
+              ))}
+            </div>
+            <a
+              className="navigation__email"
+              href="mailto:sb.aeronautics@gmail.com"
+              tabIndex={open ? 0 : -1}
+            >
+              sb.aeronautics@gmail.com
+            </a>
           </div>
-          <a
-            className="navigation__email"
-            href="mailto:sb.aeronautics@gmail.com"
-            tabIndex={open ? 0 : -1}
-          >
-            sb.aeronautics@gmail.com
-          </a>
         </div>
       </nav>
     </header>

@@ -96,12 +96,15 @@
   visibility: visible;
 }
 
+.navigation__menu-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
 .navigation__links {
   display: flex;
-  min-height: 0;
   flex-direction: column;
   align-items: center;
-  overflow: hidden;
   padding: 8px 24px 24px;
 }
 
