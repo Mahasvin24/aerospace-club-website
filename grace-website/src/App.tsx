@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import Header from './components/Header'
 import AboutPage from './pages/AboutPage'
 import FleetPage from './pages/FleetPage'
@@ -19,14 +19,23 @@ const pageTitles: Record<string, string> = {
 
 function App() {
   const location = useLocation()
+  const previousPath = useRef(location.pathname)
 
   useEffect(() => {
     document.title = pageTitles[location.pathname] ?? 'Santa Barbara Aeronautics'
     window.scrollTo({ top: 0, behavior: 'instant' })
+    if (previousPath.current !== location.pathname) {
+      previousPath.current = location.pathname
+      const frame = requestAnimationFrame(() => {
+        document.getElementById('main-content')?.focus({ preventScroll: true })
+      })
+      return () => cancelAnimationFrame(frame)
+    }
   }, [location.pathname])
 
   return (
     <div className="site-shell">
+      <a className="skip-link" href="#main-content">Skip to content</a>
       <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />

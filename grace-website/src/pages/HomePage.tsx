@@ -40,7 +40,7 @@ function AircraftBlueprint() {
 
 export default function HomePage() {
   return (
-    <main className="home-page">
+    <main id="main-content" tabIndex={-1} className="home-page">
       <h1 className="sr-only">Santa Barbara Aeronautics</h1>
 
       <div className="home-grid" aria-hidden="true">

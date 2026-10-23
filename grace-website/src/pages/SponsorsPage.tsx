@@ -3,7 +3,7 @@ import './SponsorsPage.css'
 
 export default function SponsorsPage() {
   return (
-    <main className="page sponsors-page">
+    <main id="main-content" tabIndex={-1} className="page sponsors-page">
       <div className="page__inner">
         <PageIntro eyebrow="Partners / Our Supporters" title="Building the future of flight, together.">
           <p className="sponsors-page__lede">
@@ -21,6 +21,9 @@ export default function SponsorsPage() {
                 className="sponsor-card__logo sponsor-card__logo--aztech"
                 src="/assets/sponsors/aztech-labs.png"
                 alt="Aztech Labs"
+                width={2048}
+                height={683}
+                loading="lazy"
               />
             </div>
 
@@ -29,12 +32,15 @@ export default function SponsorsPage() {
               href="https://accu-components.com/us/"
               target="_blank"
               rel="noreferrer"
-              aria-label="Visit Accu Components"
+              aria-label="Visit Accu Components (opens in a new tab)"
             >
               <img
                 className="sponsor-card__logo sponsor-card__logo--accu"
                 src="/assets/sponsors/accu-components.png"
                 alt="Accu Components"
+                width={1536}
+                height={1024}
+                loading="lazy"
               />
             </a>
           </div>

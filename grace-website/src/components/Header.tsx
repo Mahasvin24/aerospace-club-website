@@ -26,21 +26,52 @@ export default function Header() {
   const toggleRef = useRef<HTMLButtonElement>(null)
   const firstLinkRef = useRef<HTMLAnchorElement>(null)
 
+  function closeMenu() {
+    setOpen(false)
+    toggleRef.current?.focus({ preventScroll: true })
+  }
+
+  function navigateTo(path: string) {
+    if (path === location.pathname) closeMenu()
+    else setOpen(false)
+  }
+
   useEffect(() => {
     setOpen(false)
   }, [location.pathname])
 
   useEffect(() => {
     document.body.classList.toggle('menu-open', open)
-    if (open) firstLinkRef.current?.focus()
-    return () => document.body.classList.remove('menu-open')
+    const main = document.querySelector('main')
+    if (main) main.inert = open
+    const menu = document.getElementById('navigation-menu')
+    const focusFirstLink = () => firstLinkRef.current?.focus({ preventScroll: true })
+    const retryFocus = () => {
+      if (document.activeElement === toggleRef.current || !navigationRef.current?.contains(document.activeElement)) {
+        focusFirstLink()
+      }
+    }
+    let frame = 0
+    if (open) {
+      // The visibility transition can briefly prevent focus after the first paint.
+      menu?.addEventListener('transitionend', retryFocus)
+      frame = requestAnimationFrame(() => {
+        frame = requestAnimationFrame(focusFirstLink)
+      })
+    }
+    return () => {
+      cancelAnimationFrame(frame)
+      menu?.removeEventListener('transitionend', retryFocus)
+      document.body.classList.remove('menu-open')
+      if (main) main.inert = false
+    }
   }, [open])
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
       if (event.key === 'Escape' && open) {
-        setOpen(false)
-        toggleRef.current?.focus()
+        event.preventDefault()
+        closeMenu()
       }
 
       if (event.key === 'Tab' && open) {
@@ -51,7 +82,11 @@ export default function Header() {
 
         const first = focusable[0]
         const last = focusable[focusable.length - 1]
-        if (event.shiftKey && document.activeElement === first) {
+        if (!navigationRef.current?.contains(document.activeElement)) {
+          event.preventDefault()
+          const target = event.shiftKey ? last : first
+          target.focus()
+        } else if (event.shiftKey && document.activeElement === first) {
           event.preventDefault()
           last.focus()
         } else if (!event.shiftKey && document.activeElement === last) {
@@ -75,12 +110,12 @@ export default function Header() {
             aria-expanded={open}
             aria-controls="navigation-menu"
             aria-label={open ? 'Close navigation' : 'Open navigation'}
-            onClick={() => setOpen((value) => !value)}
+            onClick={() => open ? closeMenu() : setOpen(true)}
           >
             <span />
             <span />
           </button>
-          <NavLink className="navigation__brand" to="/" onClick={() => setOpen(false)}>
+          <NavLink className="navigation__brand" to="/" onClick={() => navigateTo('/')}>
             Santa Barbara Aeronautics
           </NavLink>
           <span className="navigation__plane"><PlaneIcon /></span>
@@ -94,6 +129,7 @@ export default function Header() {
                   key={item.to}
                   ref={index === 0 ? firstLinkRef : undefined}
                   to={item.to}
+                  onClick={() => navigateTo(item.to)}
                   tabIndex={open ? 0 : -1}
                   className={({ isActive }) => (isActive ? 'is-active' : '')}
                 >
@@ -105,6 +141,7 @@ export default function Header() {
               className="navigation__email"
               href="mailto:sb.aeronautics@gmail.com"
               tabIndex={open ? 0 : -1}
+              onClick={closeMenu}
             >
               sb.aeronautics@gmail.com
             </a>

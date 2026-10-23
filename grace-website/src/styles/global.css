@@ -47,12 +47,10 @@
   --page-width: 1200px;
   --content-width: 1080px;
   --text-strong: rgba(255, 255, 255, 0.96);
-  --text: rgba(255, 255, 255, 0.72);
-  --text-muted: rgba(255, 255, 255, 0.5);
+  --text-muted: rgba(255, 255, 255, 0.66);
   --line: rgba(196, 216, 244, 0.13);
   --line-strong: rgba(196, 216, 244, 0.2);
   --panel: rgba(193, 217, 255, 0.045);
-  --panel-strong: rgba(193, 217, 255, 0.075);
   --radius: 22px;
 }
 
@@ -106,7 +104,7 @@ img { display: block; max-width: 100%; }
 
 .eyebrow {
   margin: 0 0 30px;
-  color: rgba(201, 220, 246, 0.48);
+  color: rgba(201, 220, 246, 0.66);
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.24em;
@@ -149,14 +147,31 @@ h1, h2, h3, p { margin-top: 0; }
   border: 0;
 }
 
+main:focus { outline: none; }
+
+.skip-link {
+  position: fixed;
+  z-index: 100;
+  top: 8px;
+  left: 20px;
+  padding: 12px 18px;
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  color: var(--text-strong);
+  background: #040d1a;
+  transform: translateY(-150%);
+}
+
+.skip-link:focus { transform: none; }
+
 :focus-visible { outline: 2px solid rgba(190, 218, 255, 0.9); outline-offset: 4px; }
 
-@media (max-width: 600px) {
+@media (max-width: 809.98px) {
   .site-shell { background-size: 220px 220px, 220px 220px, auto; }
   .page { padding: 132px 20px 56px; }
   .page-intro { margin-bottom: 38px; }
   .eyebrow { margin-bottom: 28px; }
-  .page-intro h1 { font-size: 58px; }
+  .page-intro h1 { font-size: clamp(40px, 7.5vw, 58px); }
 }
 
 @media (prefers-reduced-motion: reduce) {

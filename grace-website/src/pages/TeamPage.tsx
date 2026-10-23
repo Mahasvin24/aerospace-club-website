@@ -94,6 +94,7 @@ function MemberCard({ member }: { member: TeamMember }) {
           <img
             src={member.image}
             alt={`${member.name}, ${member.role}`}
+            loading="lazy"
             style={{ objectPosition: member.imagePosition === 'top' ? 'center top' : 'center' }}
           />
         ) : null}
@@ -121,7 +122,7 @@ function TeamSection({ title, rows }: { title: string; rows: TeamMember[][] }) {
 
 export default function TeamPage() {
   return (
-    <main className="page team-page">
+    <main id="main-content" tabIndex={-1} className="page team-page">
       <div className="page__inner team-page__inner">
         <header className="team-intro">
           <p className="team-intro__eyebrow">Our Team</p>

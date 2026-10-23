@@ -8,6 +8,7 @@ interface FleetEntry {
   description: string
   image?: string
   imageAlt?: string
+  imageHeight?: number
   specifications: Array<{ label: string; value: string }>
 }
 
@@ -20,6 +21,7 @@ const fleet: FleetEntry[] = [
       'The catalyst build that started it all for SB Aero. Assembled and wired entirely in-house from individual components, RC Galaga served as our hands-on testbed for building, wiring, and tuning quadcopters. It was our first step in taking a complex aerial build from raw parts to field operations.',
     image: '/assets/fleet/rc-galaga.jpg',
     imageAlt: 'RC Galaga quadcopter resting on a concrete ledge',
+    imageHeight: 689,
     specifications: [
       { label: 'Weight', value: 'TBD' },
       { label: 'Span', value: '5\"' },
@@ -35,6 +37,7 @@ const fleet: FleetEntry[] = [
       'Engineered for long-duration hovering and precision data capturing, this drone serves as our analytics platform in the sky. Built around a stabilized camera gimbal, custom ESC, and onboard computer vision software, it autonomously tracks player positions, ball movement, and team formations during soccer matches. Skyscout delivers the high-altitude data every trainer and team needs.',
     image: '/assets/fleet/skyscout.jpg',
     imageAlt: 'Skyscout quadcopter being tested outdoors',
+    imageHeight: 683,
     specifications: [
       { label: 'Weight', value: 'TBD' },
       { label: 'Span', value: '10\"' },
@@ -59,7 +62,7 @@ const fleet: FleetEntry[] = [
 
 export default function FleetPage() {
   return (
-    <main className="page fleet-page">
+    <main id="main-content" tabIndex={-1} className="page fleet-page">
       <div className="page__inner">
         <PageIntro eyebrow="Our Fleet" title={'THE HARDWARE\nWE BUILD AND FLY.'}>
           <div className="fleet-page__motto" aria-label="Ad rem classem paratus — ready for the fleet">
@@ -78,6 +81,9 @@ export default function FleetPage() {
                   className="fleet-card__image"
                   src={aircraft.image}
                   alt={aircraft.imageAlt}
+                  width={1024}
+                  height={aircraft.imageHeight}
+                  loading="lazy"
                 />
               ) : (
                 <div className="fleet-card__placeholder" aria-hidden="true">
@@ -95,8 +101,10 @@ export default function FleetPage() {
                 <h2>{aircraft.name}</h2>
                 <p className="fleet-card__meta">
                   <span>{aircraft.type}</span>
-                  <span aria-hidden="true">•</span>
-                  <span>{aircraft.status}</span>
+                  <span className="fleet-card__status">
+                    <span aria-hidden="true">•</span>
+                    {aircraft.status}
+                  </span>
                 </p>
                 <p className="fleet-card__description">{aircraft.description}</p>
 

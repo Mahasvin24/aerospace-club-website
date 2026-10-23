@@ -8,7 +8,7 @@ const vision =
 
 export default function AboutPage() {
   return (
-    <main className="about-page">
+    <main id="main-content" tabIndex={-1} className="about-page">
       <section className="about-intro" aria-labelledby="about-title">
         <p className="about-intro__eyebrow">About / Our History</p>
         <h1 id="about-title">A student-built aeronautics club taking shape in Santa Barbara.</h1>
@@ -24,12 +24,12 @@ export default function AboutPage() {
           <p>Beyond the Shore</p>
         </article>
 
-        <article className="about-card about-card--statement about-card--rest">
-          <p>Above the Rest</p>
-        </article>
-
         <article className="about-card about-card--vision">
           <p>{vision}</p>
+        </article>
+
+        <article className="about-card about-card--statement about-card--rest">
+          <p>Above the Rest</p>
         </article>
       </section>
     </main>

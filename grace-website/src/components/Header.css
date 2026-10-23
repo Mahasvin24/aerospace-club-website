@@ -1,13 +1,15 @@
 .site-header {
   position: fixed;
   z-index: 50;
-  top: 30px;
+  --header-top: 30px;
+  top: var(--header-top);
   left: 50%;
   width: min(820px, calc(100% - 40px));
   transform: translateX(-50%);
 }
 
 .navigation {
+  max-height: calc(100dvh - var(--header-top) - 16px);
   overflow: hidden;
   border: 1px solid var(--line-strong);
   border-radius: 20px;
@@ -35,8 +37,8 @@
 
 .navigation__toggle {
   display: grid;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   place-content: center;
   gap: 7px;
   border: 0;
@@ -59,7 +61,7 @@
 .navigation__brand {
   justify-self: center;
   color: var(--text-strong);
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   line-height: 1;
   letter-spacing: 0.12em;
@@ -84,6 +86,7 @@
 
 .navigation__menu {
   display: grid;
+  max-height: calc(100dvh - var(--header-top) - 88px);
   grid-template-rows: 0fr;
   opacity: 0;
   visibility: hidden;
@@ -98,7 +101,9 @@
 
 .navigation__menu-inner {
   min-height: 0;
-  overflow: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable both-edges;
 }
 
 .navigation__links {
@@ -109,7 +114,10 @@
 }
 
 .navigation__links a {
-  color: rgba(255, 255, 255, 0.66);
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.76);
   font-size: 23px;
   line-height: 1.45;
   transition: color 160ms ease, transform 160ms ease;
@@ -123,7 +131,9 @@
 }
 
 .navigation__email {
-  margin: 0 24px;
+  display: block;
+  overflow-wrap: anywhere;
+  margin: 0 24px 8px;
   padding: 20px 0 24px;
   border-top: 1px solid var(--line);
   color: var(--text-muted);
@@ -132,10 +142,20 @@
   text-align: center;
 }
 
-@media (max-width: 600px) {
-  .site-header { top: 24px; }
+@media (min-width: 1200px) {
+  /* The desktop reference offsets these within the otherwise centered bar. */
+  .navigation__brand { transform: translateX(16px); }
+  .navigation__plane { margin-right: 12px; }
+}
+
+@media (min-width: 810px) and (max-width: 1199.98px) {
+  .site-header { width: min(820px, calc(100% - 176px)); }
+}
+
+@media (max-width: 809.98px) {
+  .site-header { --header-top: 24px; }
   .navigation__bar { grid-template-columns: 44px 1fr; padding: 0 20px; }
-  .navigation__brand { justify-self: end; font-size: 12px; letter-spacing: 0.08em; }
+  .navigation__brand { justify-self: center; font-size: clamp(10px, calc(5vw - 6px), 13.5px); line-height: 1.2; letter-spacing: 0.08em; }
   .navigation__plane { display: none; }
 }
 

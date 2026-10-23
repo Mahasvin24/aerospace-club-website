@@ -8,7 +8,7 @@ const steps = [
     number: '01',
     title: 'Reach out',
     description: (
-      <>Fill out our google form linked <a href={joinFormUrl} target="_blank" rel="noreferrer">here</a></>
+      <>Fill out our google form linked <a href={joinFormUrl} target="_blank" rel="noreferrer" aria-label="Open the membership interest form here (opens in a new tab)">here</a></>
     ),
   },
   {
@@ -25,7 +25,7 @@ const steps = [
 
 export default function JoinPage() {
   return (
-    <main className="page join-page">
+    <main id="main-content" tabIndex={-1} className="page join-page">
       <div className="page__inner join-page__inner">
         <header className="join-intro">
           <p className="join-intro__eyebrow">Join / Contact</p>
@@ -54,12 +54,12 @@ export default function JoinPage() {
 
           <div className="join-calendar">
             <p className="join-calendar__label">Calendar</p>
-            <a className="join-calendar__title" href={calendarUrl} target="_blank" rel="noreferrer">
+            <a className="join-calendar__title" aria-label="SB Aero's Annual Calendar (opens in a new tab)" href={calendarUrl} target="_blank" rel="noreferrer">
               SB Aero&apos;s Annual Calendar
             </a>
             <p>
               Find our events and meeting schedule{' '}
-              <a href={calendarUrl} target="_blank" rel="noreferrer">here</a>
+              <a href={calendarUrl} target="_blank" rel="noreferrer" aria-label="View club events and meeting schedule here (opens in a new tab)">here</a>
             </p>
           </div>
         </section>
