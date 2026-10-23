@@ -41,6 +41,16 @@
   --paper: #fafbf7;
   --line: #d6dcd9;
   --muted: #5d6c7b;
+  --page-gutter: clamp(22px, 4.167vw, 60px);
+  --panel-gutter: clamp(10px, 1.389vw, 20px);
+  --content-width: 1280px;
+  --panel-width: 1520px;
+  --content-inset: max(var(--page-gutter), calc((100vw - var(--content-width)) / 2));
+  --panel-offset: max(var(--panel-gutter), calc((100vw - var(--panel-width)) / 2));
+  --panel-inset: calc(var(--content-inset) - var(--panel-offset));
+  --space-sm: 24px;
+  --space-md: 40px;
+  --space-lg: 64px;
 }
 * {
   box-sizing: border-box;
@@ -140,8 +150,7 @@ section[id] {
   transform: none;
 }
 .section-wrap {
-  max-width: 1280px;
-  width: calc(100% - 120px);
+  width: min(var(--content-width), calc(100% - 2 * var(--page-gutter)));
   margin-inline: auto;
 }
 .arrow {
@@ -167,9 +176,8 @@ section[id] {
   height: 43px;
 }
 .site-header {
+  width: min(var(--content-width), calc(100% - 2 * var(--page-gutter)));
   height: 100px;
-  max-width: 1560px;
-  padding: 0 54px;
   margin: auto;
   display: flex;
   align-items: center;
@@ -220,15 +228,19 @@ section[id] {
   display: none;
 }
 
+.hero,
+.crew-section,
+.join-section {
+  width: min(var(--panel-width), calc(100% - 2 * var(--panel-gutter)));
+  margin-inline: auto;
+}
 .hero {
-  max-width: 1520px;
-  margin: 0 20px;
   background: var(--sky);
   border-radius: 18px;
   position: relative;
   overflow: hidden;
   color: var(--blue);
-  padding: 30px 44px 19px;
+  padding: 30px var(--panel-inset) 19px;
 }
 .hero-topline {
   display: flex;
@@ -265,14 +277,9 @@ section[id] {
   position: relative;
   z-index: 2;
   padding-top: 27px;
-  padding-left: 16px;
-  pointer-events: none;
-}
-.hero-copy a {
-  pointer-events: auto;
 }
 .hero h1 {
-  font-size: clamp(80px, 8.8vw, 138px);
+  font-size: clamp(68px, calc(36px + 6.5vw), 138px);
   font-weight: 500;
   letter-spacing: -0.078em;
   line-height: 0.91;
@@ -283,7 +290,7 @@ section[id] {
   letter-spacing: -0.8px;
 }
 .hero-description {
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.7;
   margin-top: 25px;
   color: #3d5787;
@@ -326,18 +333,20 @@ section[id] {
   margin-top: 28px;
 }
 .hero-aircraft {
+  align-self: stretch;
   position: relative;
   min-width: 0;
   isolation: isolate;
   overflow: hidden;
 }
 .sky-disc {
+  width: min(90%, 480px);
+  aspect-ratio: 1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   position: absolute;
   z-index: -1;
-  width: 480px;
-  height: 480px;
-  top: -7px;
-  left: 20px;
   background: #d6e5f5;
   border-radius: 50%;
 }
@@ -349,11 +358,12 @@ section[id] {
   border-radius: 50%;
 }
 .aircraft-art {
-  width: calc(100% + 110px);
+  width: 110%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   max-width: none;
   position: absolute;
-  top: -74px;
-  left: -74px;
   overflow: visible;
 }
 .aircraft-guides {
@@ -430,7 +440,7 @@ section[id] {
 }
 .hero-project div > span {
   display: block;
-  font-size: 11px;
+  font-size: 12px;
   margin-top: 5px;
   color: #536b95;
 }
@@ -441,6 +451,8 @@ section[id] {
 }
 .aircraft-controls button {
   border-radius: 30px;
+  min-height: 44px;
+  white-space: nowrap;
   background: transparent;
   padding: 10px 15px;
   display: flex;
@@ -465,7 +477,7 @@ section[id] {
 }
 .part-description {
   min-height: 20px;
-  font-size: 11px;
+  font-size: 12px;
   text-align: right;
   max-width: 610px;
   margin: 13px 0 0 auto;
@@ -474,7 +486,7 @@ section[id] {
 .intro-strip {
   display: flex;
   align-items: center;
-  padding: 66px 0 70px;
+  padding: var(--space-lg) 0;
   gap: 25px;
 }
 .intro-star {
@@ -504,12 +516,12 @@ section[id] {
   align-items: flex-end;
   justify-content: space-between;
   gap: 40px;
-  margin-bottom: 43px;
+  margin-bottom: var(--space-md);
 }
 .section-heading h2,
 .story h2,
 .crew-copy h2 {
-  font-size: clamp(42px, 4.3vw, 64px);
+  font-size: clamp(42px, calc(24px + 2.8vw), 64px);
   line-height: 1.06;
   letter-spacing: -0.055em;
 }
@@ -529,7 +541,7 @@ section[id] {
   border-bottom: 1px solid var(--line);
 }
 .fleet-tabs button {
-  padding: 20px 22px;
+  padding: 20px 48px 20px 22px;
   text-align: left;
   background: #edf0ea;
   flex: 1;
@@ -555,7 +567,7 @@ section[id] {
 }
 .tab-type {
   display: block;
-  font-size: 11px;
+  font-size: 12px;
   opacity: 0.8;
   margin-top: 5px;
 }
@@ -570,11 +582,12 @@ section[id] {
 .fleet-panel {
   display: grid;
   grid-template-columns: 1.08fr 1fr;
-  gap: 62px;
+  gap: var(--space-lg);
   padding: 36px 0 33px;
   animation: panel-arrive 0.35s both;
 }
 .fleet-visual {
+  min-width: 0;
   min-height: 390px;
   position: relative;
   overflow: hidden;
@@ -593,7 +606,7 @@ section[id] {
   bottom: 17px;
   left: 17px;
   padding: 6px 11px;
-  font-size: 10px;
+  font-size: 12px;
   color: var(--ink);
   background: rgba(250, 251, 247, 0.95);
   border-radius: 20px;
@@ -608,10 +621,11 @@ section[id] {
   position: absolute;
   bottom: 22px;
   right: 20px;
-  font-size: 10px;
+  font-size: 12px;
   color: var(--blue);
 }
 .fleet-details {
+  min-width: 0;
   padding: 8px 0;
 }
 .status {
@@ -639,32 +653,33 @@ section[id] {
   background: #8b7957;
 }
 .fleet-details h3 {
-  font-size: 33px;
+  font-size: clamp(28px, calc(20px + 1vw), 33px);
   line-height: 1.13;
   letter-spacing: -1.3px;
   margin: 20px 0 18px;
   max-width: 370px;
 }
 .fleet-details > p {
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.85;
   color: var(--muted);
   max-width: 500px;
 }
 .specs {
   display: grid;
-  grid-template-columns: 1fr 1fr 1.2fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.2fr);
   gap: 12px;
-  margin: 24px 0 22px;
+  margin: var(--space-sm) 0;
   padding: 19px 0 0;
   border-top: 1px solid var(--line);
 }
 .specs dt {
-  font-size: 10px;
+  font-size: 12px;
   color: var(--muted);
   margin-bottom: 8px;
 }
 .specs dd {
+  overflow-wrap: anywhere;
   margin: 0;
   font-size: 16px;
   font-weight: 500;
@@ -674,9 +689,10 @@ section[id] {
   display: inline-flex;
   align-items: center;
   gap: 15px;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
-  padding: 5px 0;
+  padding: 8px 0;
+  min-height: 44px;
   background: transparent;
   position: relative;
 }
@@ -700,7 +716,7 @@ section[id] {
 .fleet-footnote {
   border-top: 1px solid var(--line);
   padding-top: 18px;
-  font-size: 11px;
+  font-size: 12px;
   color: var(--muted);
   display: flex;
   justify-content: space-between;
@@ -737,14 +753,14 @@ section[id] {
   color: var(--blue);
 }
 .story h2 {
+  font-size: clamp(46px, calc(28px + 2.5vw), 64px);
   color: var(--blue);
-  font-size: 64px;
 }
 .story-copy {
   padding-top: 1px;
 }
 .story-copy > p {
-  font-size: 14px;
+  font-size: 15px;
   color: var(--muted);
   margin-bottom: 18px;
 }
@@ -769,27 +785,26 @@ section[id] {
   white-space: nowrap;
 }
 .ways-to-build p {
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.8;
   color: var(--muted);
 }
 .crew-section {
   background: #e9eddf;
   padding: 80px 0 67px;
-  margin: 0 20px;
   border-radius: 18px;
 }
 .crew-inner {
+  width: calc(100% - 2 * var(--panel-inset));
   display: grid;
   grid-template-columns: 0.9fr 1.4fr;
   gap: 75px;
-  width: calc(100% - 100px);
 }
 .crew-copy h2 {
-  font-size: 57px;
+  font-size: clamp(42px, calc(25px + 2.3vw), 57px);
 }
 .crew-copy > p:not(.section-kicker) {
-  font-size: 13px;
+  font-size: 15px;
   margin-top: 24px;
   max-width: 300px;
   color: #526452;
@@ -843,12 +858,12 @@ section[id] {
 }
 .crew-portraits strong {
   display: block;
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 500;
 }
 .crew-portraits figcaption > span {
   display: block;
-  font-size: 9px;
+  font-size: 12px;
   color: #526452;
   margin-top: 3px;
   line-height: 1.5;
@@ -869,6 +884,11 @@ section[id] {
   backdrop-filter: blur(4px);
 }
 .dialog-heading {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--paper);
+  padding-bottom: 20px;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -883,12 +903,10 @@ section[id] {
   letter-spacing: -2px;
 }
 .dialog-close {
-  position: sticky;
-  top: 0;
+  width: 44px;
+  height: 44px;
   background: #e5eadf;
   border-radius: 50%;
-  width: 42px;
-  height: 42px;
   flex-shrink: 0;
   font-size: 25px;
 }
@@ -912,7 +930,7 @@ section[id] {
   margin-top: 12px;
 }
 .directory-member > p {
-  font-size: 10px;
+  font-size: 12px;
   color: var(--muted);
   margin-top: 3px;
   line-height: 1.5;
@@ -957,7 +975,7 @@ section[id] {
   margin-bottom: 20px;
 }
 .support-heading > p:not(.section-kicker) {
-  font-size: 13px;
+  font-size: 15px;
   color: var(--muted);
   max-width: 420px;
 }
@@ -1002,15 +1020,13 @@ section[id] {
 }
 
 .join-section {
-  margin: 0 20px;
-  max-width: 1520px;
   background: var(--blue);
   color: #fff;
   border-radius: 18px;
   overflow: hidden;
 }
 .join-main {
-  padding: 62px 60px 85px;
+  padding: 62px var(--panel-inset) 85px;
   display: grid;
   grid-template-columns: 1.35fr 1fr;
   gap: 60px;
@@ -1023,7 +1039,7 @@ section[id] {
   margin-bottom: 27px;
 }
 .join-main h2 {
-  font-size: clamp(56px, 6vw, 90px);
+  font-size: clamp(46px, calc(20px + 4.5vw), 90px);
   letter-spacing: -0.064em;
   line-height: 1.02;
 }
@@ -1052,7 +1068,7 @@ section[id] {
 .join-form-note {
   display: block;
   color: #d0dcf8;
-  font-size: 10px;
+  font-size: 12px;
   margin: 12px 0 0 6px;
 }
 .join-flightline {
@@ -1067,10 +1083,10 @@ section[id] {
   pointer-events: none;
 }
 .join-steps {
+  margin-inline: var(--panel-inset);
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 40px;
-  margin: 0 60px;
   padding: 27px 0 32px;
   border-top: 1px solid #5a77d5;
   border-bottom: 1px solid #5a77d5;
@@ -1090,13 +1106,13 @@ section[id] {
   letter-spacing: -0.3px;
 }
 .join-steps p {
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.6;
   max-width: 210px;
   color: #e0e7fc;
 }
 .join-questions {
-  padding: 24px 60px 40px;
+  padding: 24px var(--panel-inset) 40px;
 }
 .join-questions details {
   border-bottom: 1px solid #5a77d5;
@@ -1140,9 +1156,9 @@ section[id] {
   outline-color: var(--yellow);
 }
 .footer {
-  max-width: 1440px;
+  width: min(var(--content-width), calc(100% - 2 * var(--page-gutter)));
   margin: auto;
-  padding: 56px 60px 25px;
+  padding: 56px 0 25px;
 }
 .footer-top {
   display: flex;
@@ -1178,7 +1194,7 @@ section[id] {
   justify-content: space-between;
   border-top: 1px solid var(--line);
   padding-top: 22px;
-  font-size: 10px;
+  font-size: 12px;
   color: var(--muted);
   gap: 20px;
 }
@@ -1218,49 +1234,16 @@ section[id] {
   .hero-main {
     min-height: 560px;
   }
-  .sky-disc {
-    width: 570px;
-    height: 570px;
-  }
-  .aircraft-art {
-    top: -74px;
-  }
   .hero-copy {
     padding-top: 35px;
   }
 }
 @media (max-width: 1150px) {
-  .section-wrap {
-    width: calc(100% - 90px);
-  }
-  .site-header {
-    padding-inline: 38px;
-  }
   .main-nav {
     gap: 22px;
   }
-  .hero {
-    padding-inline: 30px;
-  }
-  .hero-copy {
-    padding-left: 7px;
-  }
   .hero-main {
     min-height: 495px;
-  }
-  .hero h1 {
-    font-size: 105px;
-  }
-  .sky-disc {
-    width: 410px;
-    height: 410px;
-    top: 15px;
-    left: 0;
-  }
-  .aircraft-art {
-    width: calc(100% + 130px);
-    top: -42px;
-    left: -80px;
   }
   .hero-location {
     display: none;
@@ -1271,9 +1254,6 @@ section[id] {
   }
   .hero-bottom {
     gap: 10px;
-  }
-  .hero-project div > span {
-    font-size: 10px;
   }
   .aircraft-controls button {
     font-size: 11px;
@@ -1286,12 +1266,6 @@ section[id] {
   .fleet-visual {
     min-height: 410px;
   }
-  .fleet-details h3 {
-    font-size: 29px;
-  }
-  .fleet-details > p {
-    font-size: 12px;
-  }
   .specs dd {
     font-size: 14px;
   }
@@ -1301,16 +1275,9 @@ section[id] {
   .story-title {
     padding-left: 65px;
   }
-  .story h2 {
-    font-size: 57px;
-  }
   .crew-inner {
     gap: 40px;
-    width: calc(100% - 70px);
     grid-template-columns: 0.9fr 1.3fr;
-  }
-  .crew-copy h2 {
-    font-size: 48px;
   }
   .crew-portraits {
     gap: 10px;
@@ -1319,18 +1286,11 @@ section[id] {
     gap: 55px;
   }
   .join-main {
-    padding: 55px 45px 70px;
+    padding: 55px var(--panel-inset) 70px;
     gap: 40px;
   }
   .join-steps {
-    margin-inline: 45px;
     gap: 22px;
-  }
-  .join-questions {
-    padding-inline: 45px;
-  }
-  .footer {
-    padding-inline: 45px;
   }
 }
 @media (max-width: 900px) {
@@ -1349,9 +1309,6 @@ section[id] {
   .brand > svg {
     width: 38px;
   }
-  .hero h1 {
-    font-size: 92px;
-  }
   .hero-main {
     min-height: 460px;
     grid-template-columns: 50% 50%;
@@ -1361,20 +1318,6 @@ section[id] {
   }
   .hero-motto {
     font-size: 22px;
-  }
-  .hero-description {
-    font-size: 13px;
-  }
-  .sky-disc {
-    width: 335px;
-    height: 335px;
-    top: 30px;
-    left: -10px;
-  }
-  .aircraft-art {
-    top: 26px;
-    left: -112px;
-    width: calc(100% + 190px);
   }
   .hero-bottom {
     align-items: flex-start;
@@ -1406,19 +1349,23 @@ section[id] {
   }
   .part-description {
     max-width: 450px;
-    font-size: 10px;
-  }
-  .section-heading h2 {
-    font-size: 49px;
   }
   .section-heading > p {
     font-size: 12px;
   }
   .fleet-panel {
+    grid-template-columns: minmax(0, 1fr);
     gap: 28px;
   }
+  .fleet-details > p {
+    max-width: 65ch;
+  }
+  .fleet-details h3 {
+    max-width: 560px;
+  }
   .fleet-visual {
-    min-height: 420px;
+    min-height: 0;
+    aspect-ratio: 16 / 10;
   }
   .specs {
     gap: 8px;
@@ -1427,13 +1374,10 @@ section[id] {
     font-size: 12px;
   }
   .fleet-tabs button {
-    padding: 18px;
+    padding: 18px 42px 18px 18px;
   }
   .tab-icon {
     right: 18px;
-  }
-  .tab-type {
-    font-size: 10px;
   }
   .story {
     gap: 35px;
@@ -1446,20 +1390,13 @@ section[id] {
   .mini-mark {
     top: 0;
   }
-  .story h2 {
-    font-size: 54px;
-  }
   .story-copy {
     padding-top: 62px;
   }
   .story-copy > p.story-lead {
     font-size: 20px;
   }
-  .story-copy > p {
-    font-size: 12px;
-  }
   .ways-to-build {
-    gap: 16px;
     display: block;
   }
   .ways-to-build h3 {
@@ -1469,20 +1406,8 @@ section[id] {
     gap: 20px;
     grid-template-columns: 0.85fr 1.2fr;
   }
-  .crew-copy h2 {
-    font-size: 40px;
-  }
-  .crew-copy > p:not(.section-kicker) {
-    font-size: 12px;
-  }
   .crew-portraits {
     gap: 8px;
-  }
-  .crew-portraits strong {
-    font-size: 10px;
-  }
-  .crew-portraits figcaption > span {
-    font-size: 8px;
   }
   .support {
     gap: 35px;
@@ -1495,9 +1420,6 @@ section[id] {
   }
   .join-main {
     gap: 20px;
-  }
-  .join-main h2 {
-    font-size: 62px;
   }
   .join-copy > p {
     font-size: 16px;
@@ -1514,14 +1436,10 @@ section[id] {
   .join-steps h3 {
     font-size: 15px;
   }
-  .join-steps p {
-    font-size: 10px;
-  }
 }
 @media (max-width: 800px) {
   .site-header {
     height: 87px;
-    padding: 0 30px;
     position: relative;
     z-index: 20;
   }
@@ -1585,40 +1503,41 @@ section[id] {
   .menu-toggle.is-open span:last-child {
     transform: translateY(-4.25px) rotate(-45deg);
   }
-  .hero h1 {
-    font-size: 85px;
-  }
   .hero-main {
-    min-height: 446px;
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+  }
+  .hero-aircraft {
+    height: clamp(340px, 65vw, 460px);
+  }
+  .hero-aircraft .aircraft-art {
+    width: min(110%, 650px);
+  }
+  .hero-bottom {
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .aircraft-controls {
+    flex-wrap: wrap;
+  }
+  .aircraft-controls button {
+    font-size: 12px;
+    gap: 6px;
+  }
+  .desktop-break {
+    display: none;
   }
   .hero-copy .button {
     font-size: 12px;
     gap: 18px;
   }
-  .hero-description {
-    font-size: 12px;
-  }
-  .aircraft-controls button {
-    gap: 6px;
-  }
-  .hero-project {
-    max-width: 175px;
-  }
   .hero-project div > span {
-    font-size: 9px;
+    max-width: none;
   }
   .figure-note {
     font-size: 10px;
   }
-  .fleet-panel {
-    grid-template-columns: 1fr 1fr;
-    gap: 25px;
-  }
-  .fleet-visual {
-    min-height: 430px;
-  }
   .fleet-details h3 {
-    font-size: 26px;
     letter-spacing: -1px;
   }
   .fleet-tabs button > span:first-child {
@@ -1646,7 +1565,6 @@ section[id] {
   .crew-copy h2 {
     grid-column: 1;
     grid-row: 2/4;
-    font-size: 45px;
   }
   .crew-copy > p:not(.section-kicker) {
     margin-top: 0;
@@ -1670,29 +1588,11 @@ section[id] {
   .crew-portraits figure:nth-child(3) {
     margin-top: 0;
   }
-  .crew-portraits strong {
-    font-size: 12px;
-  }
-  .crew-portraits figcaption > span {
-    font-size: 10px;
-  }
   .join-main {
     grid-template-columns: 1.1fr 1fr;
   }
-  .join-main h2 {
-    font-size: 55px;
-  }
   .join-copy > p {
     font-size: 14px;
-  }
-  .join-main {
-    padding-inline: 35px;
-  }
-  .join-steps {
-    margin-inline: 35px;
-  }
-  .join-questions {
-    padding-inline: 35px;
   }
   .directory-grid {
     grid-template-columns: repeat(3, 1fr);
@@ -1714,16 +1614,11 @@ section[id] {
   html {
     scroll-padding-top: 16px;
   }
-  .section-wrap {
-    width: calc(100% - 44px);
-  }
   .site-header {
     height: 82px;
-    padding-inline: 23px;
   }
   .hero {
-    margin: 0 10px;
-    padding: 23px 22px 18px;
+    padding: 23px var(--panel-inset) 18px;
     border-radius: 13px;
   }
   .hero-topline {
@@ -1739,7 +1634,6 @@ section[id] {
     padding: 0;
   }
   .hero h1 {
-    font-size: clamp(83px, 17vw, 112px);
     line-height: 0.9;
   }
   .hero-motto {
@@ -1747,7 +1641,6 @@ section[id] {
     margin-top: 18px;
   }
   .hero-description {
-    font-size: 12px;
     margin-top: 20px;
     line-height: 1.65;
   }
@@ -1766,18 +1659,6 @@ section[id] {
     height: 340px;
     margin-top: 4px;
   }
-  .sky-disc {
-    width: 310px;
-    height: 310px;
-    left: 50%;
-    top: 15px;
-    transform: translateX(-50%);
-  }
-  .aircraft-art {
-    width: calc(100% + 65px);
-    top: -5px;
-    left: -37px;
-  }
   .figure-note {
     right: 0;
     bottom: 70px;
@@ -1792,15 +1673,10 @@ section[id] {
     display: block;
   }
   .hero-project {
-    max-width: none;
     gap: 10px;
   }
   .hero-project strong {
     font-size: 12px;
-  }
-  .hero-project div > span {
-    max-width: none;
-    font-size: 10px;
   }
   .project-symbol {
     width: 34px;
@@ -1808,18 +1684,16 @@ section[id] {
   }
   .aircraft-controls {
     margin-top: 18px;
-    gap: 4px;
+    gap: 8px;
     justify-content: space-between;
   }
   .aircraft-controls button {
-    font-size: 10px;
-    flex: 1;
+    flex: 1 1 110px;
     justify-content: space-between;
     padding: 10px 12px;
     border: 1px solid #c4d2e6;
   }
   .part-description {
-    font-size: 10px;
     text-align: left;
     margin-top: 12px;
     min-height: 34px;
@@ -1853,9 +1727,6 @@ section[id] {
   .section-heading .section-kicker {
     margin-bottom: 15px;
   }
-  .section-heading h2 {
-    font-size: 44px;
-  }
   .section-heading > p {
     margin-top: 20px;
     font-size: 12px;
@@ -1865,7 +1736,7 @@ section[id] {
     padding-bottom: 16px;
   }
   .fleet-tabs button {
-    padding: 16px 11px 14px;
+    padding: 16px 10px 14px;
     min-height: 85px;
   }
   .fleet-tabs button > span:first-child {
@@ -1873,14 +1744,11 @@ section[id] {
     letter-spacing: -0.6px;
   }
   .tab-type {
-    font-size: 8px;
-    max-width: 85px;
+    max-width: none;
     line-height: 1.5;
   }
   .tab-icon {
-    font-size: 14px;
-    right: 9px;
-    top: 17px;
+    display: none;
   }
   .fleet-panel {
     display: flex;
@@ -1892,32 +1760,26 @@ section[id] {
     min-height: 0;
     aspect-ratio: 1.3;
   }
+  .concept-caption {
+    top: 16px;
+    bottom: auto;
+    left: 17px;
+    right: auto;
+  }
   .fleet-details {
     padding: 0;
   }
   .fleet-details h3 {
-    font-size: 32px;
     margin-top: 17px;
     max-width: 320px;
     letter-spacing: -1.2px;
   }
-  .fleet-details > p {
-    font-size: 12px;
-    line-height: 1.85;
-  }
   .specs {
     margin: 22px 0 18px;
     gap: 12px;
-    grid-template-columns: 1fr 1fr 1.2fr;
   }
   .specs dd {
     font-size: 15px;
-  }
-  .specs dt {
-    font-size: 10px;
-  }
-  .fleet-footnote {
-    font-size: 9px;
   }
   .story {
     padding: 65px 0 66px;
@@ -1940,9 +1802,6 @@ section[id] {
     margin-bottom: 17px;
     font-size: 11px;
   }
-  .story h2 {
-    font-size: 49px;
-  }
   .story-copy {
     padding-top: 30px;
   }
@@ -1950,28 +1809,17 @@ section[id] {
     font-size: 21px;
     margin-bottom: 21px;
   }
-  .story-copy > p {
-    font-size: 12px;
-  }
   .ways-to-build {
-    display: flex;
     margin-top: 24px;
     padding-top: 20px;
   }
   .ways-to-build h3 {
-    font-size: 12px;
-    margin: 0;
-  }
-  .ways-to-build p {
-    font-size: 10px;
+    font-size: 14px;
+    margin: 0 0 10px;
   }
   .crew-section {
-    margin: 0 10px;
     padding: 38px 0 37px;
     border-radius: 13px;
-  }
-  .crew-inner {
-    width: calc(100% - 42px);
   }
   .crew-copy {
     display: block;
@@ -1980,12 +1828,8 @@ section[id] {
     margin-bottom: 17px;
     font-size: 11px;
   }
-  .crew-copy h2 {
-    font-size: 47px;
-  }
   .crew-copy > p:not(.section-kicker) {
     margin-top: 19px;
-    font-size: 12px;
     max-width: 330px;
   }
   .crew-copy .text-link {
@@ -2002,11 +1846,7 @@ section[id] {
     margin-top: 11px;
   }
   .crew-portraits strong {
-    font-size: 10px;
     line-height: 1.3;
-  }
-  .crew-portraits figcaption > span {
-    font-size: 8px;
   }
   .crew-portraits figure:nth-child(2) {
     margin-top: 18px;
@@ -2024,8 +1864,6 @@ section[id] {
     letter-spacing: -1.5px;
   }
   .dialog-close {
-    width: 35px;
-    height: 35px;
     font-size: 24px;
   }
   .directory-grid {
@@ -2034,9 +1872,6 @@ section[id] {
   }
   .directory-member h3 {
     font-size: 12px;
-  }
-  .directory-note {
-    font-size: 11px;
   }
   .support {
     padding: 64px 0 54px;
@@ -2049,9 +1884,6 @@ section[id] {
   .support-heading h2 {
     font-size: 34px;
     margin-bottom: 18px;
-  }
-  .support-heading > p:not(.section-kicker) {
-    font-size: 12px;
   }
   .support-heading .text-link {
     margin-top: 17px;
@@ -2071,19 +1903,15 @@ section[id] {
     max-height: 105px;
   }
   .join-section {
-    margin: 0 10px;
     border-radius: 13px;
   }
   .join-main {
     display: block;
-    padding: 37px 24px 48px;
+    padding: 37px var(--panel-inset) 48px;
   }
   .join-main .section-kicker {
     font-size: 10px;
     margin-bottom: 21px;
-  }
-  .join-main h2 {
-    font-size: clamp(50px, 12vw, 73px);
   }
   .join-copy {
     margin-top: 28px;
@@ -2096,9 +1924,6 @@ section[id] {
     font-size: 12px;
     gap: 65px;
   }
-  .join-form-note {
-    font-size: 9px;
-  }
   .join-flightline {
     height: 180px;
     bottom: -5px;
@@ -2107,7 +1932,6 @@ section[id] {
     opacity: 0.38;
   }
   .join-steps {
-    margin-inline: 24px;
     display: flex;
     flex-direction: column;
     gap: 24px;
@@ -2121,28 +1945,26 @@ section[id] {
     margin-bottom: 5px;
   }
   .join-steps p {
-    font-size: 11px;
     max-width: none;
   }
   .join-steps > div > span {
     font-size: 10px;
   }
   .join-questions {
-    padding: 11px 24px 23px;
+    padding: 11px var(--panel-inset) 23px;
   }
   .join-questions summary {
-    font-size: 12px;
+    font-size: 14px;
     line-height: 1.5;
   }
   .join-questions details p {
-    font-size: 11px;
     overflow-wrap: anywhere;
   }
   .join-questions details {
     padding: 17px 0;
   }
   .footer {
-    padding: 35px 23px 24px;
+    padding: 35px 0 24px;
   }
   .footer-top {
     flex-wrap: wrap;
@@ -2165,61 +1987,56 @@ section[id] {
     position: absolute;
     top: 9px;
     right: 0;
-    width: 37px;
-    height: 37px;
+    width: 44px;
+    height: 44px;
     font-size: 18px;
   }
   .footer-bottom {
     align-items: flex-start;
     flex-direction: column;
     gap: 17px;
-    font-size: 9px;
     padding-top: 20px;
   }
   .footer-bottom > div {
     width: 100%;
     justify-content: space-between;
+    flex-wrap: wrap;
     gap: 12px;
   }
 }
-@media (max-width: 375px) {
-  .hero {
-    padding-inline: 18px;
+@media (max-width: 480px) {
+  .crew-portraits {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px 16px;
+    align-items: start;
   }
-  .hero h1 {
-    font-size: 79px;
+  .crew-portraits figure > div {
+    aspect-ratio: 0.8;
+  }
+  .crew-portraits figure:nth-child(2) {
+    margin-top: 28px;
+  }
+  .crew-portraits figure:nth-child(3) {
+    grid-column: 1 / -1;
+    width: calc((100% - 16px) / 2);
+    justify-self: center;
+    margin-top: 0;
+  }
+  .crew-portraits strong {
+    line-height: 1.4;
+  }
+}
+@media (max-width: 375px) {
+  .story-title {
+    padding-left: 0;
+    padding-top: 64px;
   }
   .hero-aircraft {
     height: 295px;
   }
-  .sky-disc {
-    width: 270px;
-    height: 270px;
-  }
-  .aircraft-art {
-    top: 0;
-  }
-  .aircraft-controls button {
-    padding: 9px;
-    font-size: 9px;
-  }
   .fleet-tabs button > span:first-child {
     font-size: 13px;
-  }
-  .tab-icon {
-    display: none;
-  }
-  .ways-to-build {
-    gap: 10px;
-  }
-  .ways-to-build p {
-    font-size: 9px;
-  }
-  .crew-portraits {
-    gap: 7px;
-  }
-  .crew-portraits strong {
-    font-size: 9px;
   }
 }
 @media (prefers-reduced-motion: reduce) {

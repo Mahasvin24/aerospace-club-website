@@ -38,6 +38,7 @@ function Arrow({ diagonal = false }: { diagonal?: boolean }) {
 
 function Header() {
   const [open, setOpen] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
   useEffect(() => {
     const close = (event: globalThis.KeyboardEvent) => {
@@ -49,15 +50,22 @@ function Header() {
     const resize = () => {
       if (window.innerWidth > 800) setOpen(false);
     };
+    const dismiss = (event: PointerEvent) => {
+      if (open && !headerRef.current?.contains(event.target as Node)) {
+        setOpen(false);
+      }
+    };
     window.addEventListener("keydown", close);
     window.addEventListener("resize", resize);
+    document.addEventListener("pointerdown", dismiss);
     return () => {
       window.removeEventListener("keydown", close);
       window.removeEventListener("resize", resize);
+      document.removeEventListener("pointerdown", dismiss);
     };
   }, [open]);
   return (
-    <header className="site-header">
+    <header ref={headerRef} className="site-header">
       <a
         href="#home"
         className="brand"
@@ -244,7 +252,7 @@ function Fleet() {
             id={`fleet-tab-${i}`}
             role="tab"
             aria-selected={selected === i}
-            aria-controls={`fleet-panel-${i}`}
+            aria-controls="fleet-panel"
             tabIndex={selected === i ? 0 : -1}
             onClick={() => chooseAircraft(i)}
             onKeyDown={(e) => onKeyDown(e, i)}
@@ -259,7 +267,7 @@ function Fleet() {
       </div>
       <div
         key={selected}
-        id={`fleet-panel-${selected}`}
+        id="fleet-panel"
         role="tabpanel"
         aria-labelledby={`fleet-tab-${selected}`}
         tabIndex={0}
@@ -567,6 +575,7 @@ function Join() {
             target="_blank"
             rel="noreferrer"
             className="button button--yellow"
+            aria-label="Join the crew (opens in a new tab)"
           >
             Join the crew{" "}
             <span>
@@ -640,6 +649,7 @@ function Join() {
             operations alongside engineering.{" "}
             <a href={JOIN_URL} target="_blank" rel="noreferrer">
               Tell us what interests you in the interest form.
+              <span className="sr-only"> (opens in a new tab)</span>
             </a>
           </p>
         </details>

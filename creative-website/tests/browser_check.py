@@ -56,10 +56,16 @@ with sync_playwright() as p:
     # Follow internal navigation and ensure all original links are wired.
     broken_anchors = page.locator('a[href^="#"]').evaluate_all('(links) => links.filter(a => !document.querySelector(a.getAttribute("href"))).map(a => a.getAttribute("href"))')
     assert not broken_anchors, broken_anchors
-    expect(page.get_by_role('link', name='Join the crew', exact=True)).to_have_attribute('href', 'https://docs.google.com/forms/d/e/1FAIpQLSdnimrw_WGW1eqc9N5nO0xDxfg-oGchwFrlcJK7zAYO3uvMFw/viewform')
+    expect(page.get_by_role('link', name='Join the crew (opens in a new tab)', exact=True)).to_have_attribute('href', 'https://docs.google.com/forms/d/e/1FAIpQLSdnimrw_WGW1eqc9N5nO0xDxfg-oGchwFrlcJK7zAYO3uvMFw/viewform')
+
+    # Every tab must reference a mounted panel, including inactive tabs.
+    missing_panels = page.locator('[role="tab"]').evaluate_all(
+        '(tabs) => tabs.filter(tab => !document.getElementById(tab.getAttribute("aria-controls"))).map(tab => tab.id)'
+    )
+    assert not missing_panels, missing_panels
 
     layouts = []
-    for width in [320, 375, 390, 650, 768, 1024, 1440]:
+    for width in [320, 375, 390, 480, 650, 651, 768, 800, 801, 900, 1024, 1440, 1920]:
         page.set_viewport_size({'width': width, 'height': 900})
         overflow = page.evaluate('document.documentElement.scrollWidth > window.innerWidth')
         assert not overflow, f'Horizontal overflow at {width}px'
@@ -68,6 +74,9 @@ with sync_playwright() as p:
     page.set_viewport_size({'width': 390, 'height': 844})
     page.get_by_role('button', name='Open menu').click()
     expect(page.get_by_role('navigation', name='Main navigation')).to_be_visible()
+    page.mouse.click(5, 500)
+    expect(page.get_by_role('button', name='Open menu')).to_have_attribute('aria-expanded', 'false')
+    page.get_by_role('button', name='Open menu').click()
     page.keyboard.press('Escape')
     expect(page.get_by_role('button', name='Open menu')).to_be_focused()
     page.get_by_role('button', name='Open menu').click()
@@ -75,6 +84,13 @@ with sync_playwright() as p:
     expect(page.get_by_role('button', name='Open menu')).to_have_attribute('aria-expanded', 'false')
     page.get_by_role('button', name='Meet the whole team').click()
     expect(page.get_by_role('dialog')).to_be_visible()
+    page.get_by_role('dialog').evaluate('(dialog) => { dialog.scrollTop = dialog.scrollHeight; }')
+    close_box = page.get_by_role('button', name='Close team directory').bounding_box()
+    dialog_box = page.get_by_role('dialog').bounding_box()
+    assert close_box and dialog_box
+    assert close_box['width'] >= 44 and close_box['height'] >= 44
+    assert close_box['y'] >= dialog_box['y']
+    assert close_box['y'] + close_box['height'] <= dialog_box['y'] + dialog_box['height']
     page.get_by_role('button', name='Close team directory').click()
 
     # Trigger native lazy loading before the full-page visual review.

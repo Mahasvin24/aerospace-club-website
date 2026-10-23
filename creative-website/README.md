@@ -1,16 +1,16 @@
 # Santa Barbara Aeronautics
 
-A custom coastal flight-workshop website built with React, TypeScript, and Vite. Content and original assets come from `../grace-website`; that reference project is preserved.
+A single-page website for the UC Santa Barbara aerospace club, built with React 19, TypeScript, Vite, and plain CSS. Fonts and images are served locally from `public/assets/`; club links, aircraft details, and the team roster live in `src/data.ts`.
+
+Use Node.js 22.12 or newer and npm. From `creative-website`, run:
 
 ```sh
-npm install
+npm ci
 npm run dev
 ```
 
-`npm run build` type-checks and produces `dist/`. `npm run preview` serves that production build.
+Run `npm run build` to type-check and generate `dist/`, then `npm run preview` to serve the production build locally. `npm run typecheck` runs the TypeScript checks separately.
 
-The design plan is in `DESIGN.md`. The Condor SVG is an illustrative concept, not an engineering drawing. Aircraft descriptions, available specifications, 2026–27 team members, sponsors, interest form, calendar, and contact address come from the reference content. The site does not collect form data; membership links to the club's existing Google Form.
+The site includes an interactive Condor illustration, keyboard-controlled fleet tabs with URL selection, a team directory dialog, mobile navigation, and expandable FAQs. It supports reduced motion and links to the club’s existing interest form rather than collecting submissions itself.
 
-The fleet selector supports arrow keys, Home, and End. The crew directory uses a native modal dialog. Mobile navigation supports Escape, and reduced-motion preferences are honored. All fonts and imagery are hosted locally.
-
-Browser verification is in `tests/browser_check.py`. With Vite running, activate a Python environment containing `playwright` and run `npm run test:browser`. The script uses installed Google Chrome, checks the interactive controls and seven responsive widths, and writes screenshots to `/private/tmp/sb-aero-preview` by default. Set `SB_AERO_TEST_URL` or `SB_AERO_SCREENSHOTS` to override the preview URL or screenshot directory.
+Browser checks use `npm run test:browser` with Vite running, Python Playwright available, and Google Chrome installed. See [DESIGN.md](DESIGN.md) for the visual direction and `public/assets/ASSETS*.md` for asset provenance.
