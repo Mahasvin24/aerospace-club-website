@@ -1,5 +1,7 @@
 node_modules
 dist
+.taste-skill
 .DS_Store
 *.local
+*.tsbuildinfo
 coverage

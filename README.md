@@ -2,7 +2,7 @@
 
 A six-page website for the club, based on its Framer design. Built with React 19, TypeScript, Vite, React Router, and plain CSS. Fonts and images are served locally from `public/assets/`.
 
-Use Node.js 22.12 or newer and npm. From `grace-website`, run:
+Use Node.js 22.12 or newer and npm. From the repository root, run:
 
 ```sh
 npm ci
