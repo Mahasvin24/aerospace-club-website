@@ -134,12 +134,14 @@
 }
 
 .home-marquee__track {
+  --marquee-distance: 628px;
+  --marquee-duration: 34.888888889s;
   display: flex;
   width: max-content;
   align-items: center;
   gap: 0;
   transform: translateX(0);
-  animation: home-marquee 16s linear infinite;
+  animation: home-marquee var(--marquee-duration) linear infinite;
   will-change: transform;
 }
 
@@ -157,7 +159,7 @@
 
 @keyframes home-marquee {
   from { transform: translateX(0); }
-  to { transform: translateX(calc(-100% / 3)); }
+  to { transform: translateX(calc(-1 * var(--marquee-distance))); }
 }
 
 @media (min-width: 810px) and (max-width: 1199.98px) {

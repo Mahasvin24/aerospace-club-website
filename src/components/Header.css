@@ -2,6 +2,8 @@
   position: fixed;
   z-index: 50;
   --header-top: 30px;
+  /* Framer's 0.62s / 0.28-bounce variant spring, sampled by Motion's CSS generator. */
+  --navigation-spring: 650ms linear(0, 0.0915, 0.2863, 0.5007, 0.6899, 0.8353, 0.935, 0.9955, 1.0265, 1.0376, 1.037, 1.0307, 1.0224, 1.0146, 1.0084, 1.0038, 1.0009, 0.9993, 0.9987, 0.9985, 0.9987, 1);
   top: var(--header-top);
   left: 50%;
   width: min(820px, calc(100% - 40px));
@@ -9,18 +11,26 @@
 }
 
 .navigation {
+  height: 72px;
   max-height: calc(100dvh - var(--header-top) - 16px);
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 20px;
   background: rgba(4, 18, 38, 0.44);
   box-shadow: 0 24px 80px rgba(0, 8, 24, 0.45);
-  transition: background 240ms ease;
+  backdrop-filter: blur(28px);
+  transition:
+    height var(--navigation-spring),
+    background var(--navigation-spring),
+    backdrop-filter var(--navigation-spring);
 }
 
-.navigation:hover,
-.navigation:focus-within {
+.navigation:hover {
   background: rgba(21, 56, 101, 0.58);
+}
+
+.navigation:active {
+  background: rgba(42, 92, 145, 0.7);
 }
 
 .site-header.is-open .navigation {
@@ -32,6 +42,16 @@
     rgba(16, 56, 102, 0.72) 0%,
     rgba(5, 22, 50, 0.88) 58%,
     rgba(73, 112, 154, 0.48) 100%
+  );
+  backdrop-filter: blur(36px);
+}
+
+.site-header.is-open .navigation:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(42, 91, 145, 0.8) 0%,
+    rgba(8, 30, 68, 0.9) 58%,
+    rgba(101, 143, 190, 0.5) 100%
   );
 }
 
@@ -61,7 +81,7 @@
   height: 2px;
   border-radius: 2px;
   background: rgba(255, 255, 255, 0.92);
-  transition: transform 240ms ease;
+  transition: transform var(--navigation-spring);
 }
 
 .is-open .navigation__toggle span:first-child { transform: translateY(4.5px) rotate(45deg); }
@@ -100,7 +120,6 @@
   grid-template-rows: 0fr;
   opacity: 0;
   visibility: hidden;
-  transition: grid-template-rows 360ms cubic-bezier(.2,.8,.2,1), opacity 200ms ease, visibility 360ms;
 }
 
 .is-open .navigation__menu {
@@ -129,7 +148,7 @@
   color: rgba(255, 255, 255, 0.76);
   font-size: 23px;
   line-height: 1.2;
-  transition: color 160ms ease, transform 160ms ease;
+  transition: color 200ms cubic-bezier(.44, 0, .56, 1);
 }
 
 .navigation__links a:hover,
@@ -163,11 +182,21 @@
 }
 
 @media (min-width: 810px) and (max-width: 1199.98px) {
-  .site-header { width: min(820px, calc(100% - 176px)); }
+  .site-header { width: min(636px, calc(100% - 40px)); }
+  .navigation:hover { background: rgba(21, 56, 101, 0.85); }
+  .site-header.is-open .navigation:hover {
+    background: linear-gradient(
+      135deg,
+      rgba(42, 91, 145, 0.8) 0%,
+      rgba(8, 30, 68, 0.9) 58%,
+      rgba(101, 143, 190, 0.5) 100%
+    );
+  }
 }
 
 @media (max-width: 809.98px) {
   .site-header { --header-top: 24px; }
+  .site-header.is-open .navigation { height: 409px; }
   .navigation__bar { grid-template-columns: 44px 1fr; padding: 0 20px; }
   .navigation__brand { justify-self: center; font-size: clamp(10px, calc(5vw - 6px), 13.5px); line-height: 1.2; letter-spacing: 0.08em; }
   .navigation__plane { display: none; }
@@ -176,6 +205,5 @@
 @media (prefers-reduced-motion: reduce) {
   .navigation,
   .navigation__toggle span,
-  .navigation__menu,
   .navigation__links a { transition: none; }
 }

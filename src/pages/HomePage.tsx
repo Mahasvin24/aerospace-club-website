@@ -1,4 +1,7 @@
+import { useEffect, useRef } from 'react'
 import './HomePage.css'
+
+const FRAMER_TICKER_VELOCITY = 18
 
 function AircraftBlueprint() {
   return (
@@ -39,6 +42,42 @@ function AircraftBlueprint() {
 }
 
 export default function HomePage() {
+  const marqueeTrackRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const track = marqueeTrackRef.current
+    if (!track) return
+
+    let cancelled = false
+    const updateTickerTiming = () => {
+      if (cancelled) return
+      const firstItem = track.children[0] as HTMLElement | undefined
+      const secondItem = track.children[1] as HTMLElement | undefined
+      if (!firstItem || !secondItem) return
+
+      const distance = secondItem.offsetLeft - firstItem.offsetLeft
+      if (distance <= 0) return
+      track.style.setProperty('--marquee-distance', `${distance}px`)
+      track.style.setProperty('--marquee-duration', `${distance / FRAMER_TICKER_VELOCITY}s`)
+    }
+
+    updateTickerTiming()
+    if (document.fonts) void document.fonts.ready.then(updateTickerTiming)
+
+    const resizeObserver = typeof ResizeObserver === 'undefined'
+      ? null
+      : new ResizeObserver(updateTickerTiming)
+    resizeObserver?.observe(track)
+    Array.from(track.children).forEach((item) => resizeObserver?.observe(item))
+    window.addEventListener('resize', updateTickerTiming)
+
+    return () => {
+      cancelled = true
+      resizeObserver?.disconnect()
+      window.removeEventListener('resize', updateTickerTiming)
+    }
+  }, [])
+
   return (
     <main id="main-content" tabIndex={-1} className="home-page">
       <h1 className="sr-only">Santa Barbara Aeronautics</h1>
@@ -56,7 +95,7 @@ export default function HomePage() {
       <AircraftBlueprint />
 
       <div className="home-marquee" aria-hidden="true">
-        <div className="home-marquee__track">
+        <div ref={marqueeTrackRef} className="home-marquee__track">
           <span>SB AERO</span>
           <span>SB AERO</span>
           <span>SB AERO</span>

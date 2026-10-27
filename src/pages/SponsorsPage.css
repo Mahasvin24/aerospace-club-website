@@ -40,16 +40,6 @@
   background: rgba(201, 235, 255, 0.04);
 }
 
-.sponsor-card--link {
-  transition: background-color 180ms ease, transform 180ms ease;
-}
-
-.sponsor-card--link:hover,
-.sponsor-card--link:focus-visible {
-  background: rgba(193, 217, 255, 0.075);
-  transform: translateY(-2px);
-}
-
 .sponsor-card__logo {
   width: 100%;
   height: auto;
@@ -92,11 +82,5 @@
   .sponsors h2 {
     margin-bottom: 24px;
     line-height: 1.4;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .sponsor-card--link {
-    transition: none;
   }
 }
