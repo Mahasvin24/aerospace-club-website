@@ -1,8 +1,11 @@
+.site-shell:has(.join-page) {
+  --page-background: linear-gradient(201deg, #0a204d 0%, #06132e 48.7657%, #020814 100%);
+}
+
 .join-page {
   min-height: 860px;
   padding-top: 140px;
   padding-bottom: 0;
-  background: linear-gradient(201deg, #0a204d 0%, #06132e 48.7657%, #020814 100%);
 }
 
 .join-page__inner {
@@ -72,7 +75,7 @@
   padding: 24px;
   border: 1px solid rgba(201, 235, 255, 0.14);
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.05);
+  background: linear-gradient(rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05)), var(--card-base);
 }
 
 .join-step__number {
@@ -117,7 +120,7 @@
   padding: 28px;
   border: 1px solid rgba(201, 235, 255, 0.14);
   border-radius: 22px;
-  background: rgba(255, 255, 255, 0.04);
+  background: linear-gradient(rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.04)), var(--card-base);
 }
 
 .join-contact__copy {
@@ -163,7 +166,7 @@
   padding: 24px;
   border: 1px solid rgba(201, 235, 255, 0.14);
   border-radius: 18px;
-  background: rgba(201, 235, 255, 0.04);
+  background: linear-gradient(rgba(201, 235, 255, 0.04), rgba(201, 235, 255, 0.04)), var(--card-base);
 }
 
 .join-calendar__label {

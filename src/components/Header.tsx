@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import type { MouseEvent } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import './Header.css'
 
@@ -29,6 +30,19 @@ export default function Header() {
   function closeMenu() {
     setOpen(false)
     toggleRef.current?.focus({ preventScroll: true })
+  }
+
+  function toggleMenu() {
+    if (open) closeMenu()
+    else setOpen(true)
+  }
+
+  function onBarClick(event: MouseEvent<HTMLDivElement>) {
+    // Child controls handle their own clicks, including clicks on their icons.
+    if (event.target instanceof Element && event.target.closest(
+      'a, button, input, select, textarea, label, [role="button"], [role="link"], [contenteditable="true"]',
+    )) return
+    toggleMenu()
   }
 
   function navigateTo(path: string) {
@@ -102,7 +116,7 @@ export default function Header() {
   return (
     <header className={`site-header ${open ? 'is-open' : ''}`}>
       <nav ref={navigationRef} className="navigation" aria-label="Primary navigation">
-        <div className="navigation__bar">
+        <div className="navigation__bar" onClick={onBarClick}>
           <button
             ref={toggleRef}
             className="navigation__toggle"
@@ -110,7 +124,7 @@ export default function Header() {
             aria-expanded={open}
             aria-controls="navigation-menu"
             aria-label={open ? 'Close navigation' : 'Open navigation'}
-            onClick={() => open ? closeMenu() : setOpen(true)}
+            onClick={toggleMenu}
           >
             <span />
             <span />

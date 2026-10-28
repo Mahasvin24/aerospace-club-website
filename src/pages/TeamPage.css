@@ -1,8 +1,11 @@
+.site-shell:has(.team-page) {
+  --page-background: linear-gradient(219deg, #0c264a 15%, #040d1a 39%, #0f294d 66%, #021024 90%);
+}
+
 .team-page {
   min-height: 100vh;
   padding-top: 140px;
   padding-bottom: 96px;
-  background: linear-gradient(219deg, #0c264a 15%, #040d1a 39%, #0f294d 66%, #021024 90%);
 }
 
 .team-page__inner {
@@ -114,7 +117,7 @@
   padding: 18px;
   border: 1px solid rgba(201, 235, 255, 0.14);
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.05);
+  background: linear-gradient(rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05)), var(--card-base);
 }
 
 .member-card__portrait {

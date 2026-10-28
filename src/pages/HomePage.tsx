@@ -82,16 +82,6 @@ export default function HomePage() {
     <main id="main-content" tabIndex={-1} className="home-page">
       <h1 className="sr-only">Santa Barbara Aeronautics</h1>
 
-      <div className="home-grid" aria-hidden="true">
-        <span className="home-grid__horizontal home-grid__horizontal--top" />
-        <span className="home-grid__horizontal home-grid__horizontal--one" />
-        <span className="home-grid__horizontal home-grid__horizontal--two" />
-        <span className="home-grid__horizontal home-grid__horizontal--three" />
-        <span className="home-grid__vertical home-grid__vertical--left" />
-        <span className="home-grid__vertical home-grid__vertical--center" />
-        <span className="home-grid__vertical home-grid__vertical--right" />
-      </div>
-
       <AircraftBlueprint />
 
       <div className="home-marquee" aria-hidden="true">

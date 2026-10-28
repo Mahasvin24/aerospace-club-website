@@ -51,7 +51,12 @@
   --line: rgba(196, 216, 244, 0.13);
   --line-strong: rgba(196, 216, 244, 0.2);
   --panel: rgba(193, 217, 255, 0.045);
+  /* Opaque blue underlay blocks the grid while preserving each card's tint. */
+  --card-base: #07152b;
   --radius: 22px;
+  --grid-color: rgba(191, 226, 255, 0.13);
+  --grid-column-size: 380px;
+  --grid-row-size: 254px;
 }
 
 * { box-sizing: border-box; }
@@ -66,10 +71,15 @@ img { display: block; max-width: 100%; }
   min-height: 100vh;
   overflow: hidden;
   background:
-    linear-gradient(rgba(150, 186, 235, 0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(150, 186, 235, 0.07) 1px, transparent 1px),
-    linear-gradient(234deg, rgb(9, 34, 69) -3%, rgb(4, 13, 26) 57%, rgb(2, 8, 20) 100%);
-  background-size: 380px 254px, 380px 254px, auto;
+    linear-gradient(var(--grid-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px),
+    var(--page-background, linear-gradient(234deg, rgb(9, 34, 69) -3%, rgb(4, 13, 26) 57%, rgb(2, 8, 20) 100%));
+  /* One continuous background behind all descendants; no overlay or hit target. */
+  background-size:
+    var(--grid-column-size) var(--grid-row-size),
+    var(--grid-column-size) var(--grid-row-size),
+    auto;
+  background-position: 0 0;
 }
 
 .page {
@@ -125,7 +135,7 @@ h1, h2, h3, p { margin-top: 0; }
 .glass-card {
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: var(--panel);
+  background: linear-gradient(var(--panel), var(--panel)), var(--card-base);
 }
 
 .section-rule {
@@ -167,7 +177,7 @@ main:focus { outline: none; }
 :focus-visible { outline: 2px solid rgba(190, 218, 255, 0.9); outline-offset: 4px; }
 
 @media (max-width: 809.98px) {
-  .site-shell { background-size: 220px 220px, 220px 220px, auto; }
+  .site-shell { --grid-column-size: 220px; --grid-row-size: 220px; }
   .page { padding: 132px 20px 56px; }
   .page-intro { margin-bottom: 38px; }
   .eyebrow { margin-bottom: 28px; }

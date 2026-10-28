@@ -62,6 +62,7 @@
   align-items: center;
   min-height: 72px;
   padding: 0 24px;
+  cursor: pointer;
 }
 
 .navigation__toggle {

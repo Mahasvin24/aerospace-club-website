@@ -1,3 +1,7 @@
+.site-shell:has(.about-page) {
+  --page-background: linear-gradient(131deg, rgb(10, 36, 72) -5%, rgb(4, 19, 46) 51%, rgba(1, 1, 33, 0.97) 108%);
+}
+
 .about-page {
   position: relative;
   display: flex;
@@ -8,7 +12,6 @@
   align-items: center;
   gap: 80px;
   overflow: hidden;
-  background: linear-gradient(131deg, rgb(10, 36, 72) -5%, rgb(4, 19, 46) 51%, rgba(1, 1, 33, 0.97) 108%);
 }
 
 .about-intro {
@@ -19,17 +22,6 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 20px;
-}
-
-.about-intro::after {
-  content: '';
-  position: absolute;
-  bottom: -38px;
-  left: 50%;
-  width: 100vw;
-  height: 1px;
-  transform: translateX(-50%);
-  background: rgba(191, 226, 255, 0.12);
 }
 
 .about-intro__eyebrow {
@@ -70,7 +62,7 @@
   padding: 24px;
   border-radius: 18px;
   color: rgba(255, 255, 255, 0.6);
-  background: rgba(255, 255, 255, 0.05);
+  background: linear-gradient(rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05)), var(--card-base);
 }
 
 .about-card::after {
@@ -113,7 +105,7 @@
   min-height: 260px;
   align-items: center;
   justify-content: center;
-  background: rgba(201, 235, 255, 0.04);
+  background: linear-gradient(rgba(201, 235, 255, 0.04), rgba(201, 235, 255, 0.04)), var(--card-base);
 }
 
 .about-card--statement::after {
@@ -150,8 +142,6 @@
     min-height: 0;
   }
 
-  .about-intro::after { bottom: -42px; }
-
   .about-card--shore,
   .about-card--vision { min-height: 355px; }
 
@@ -164,8 +154,6 @@
     padding: 140px 20px 64px;
     gap: 40px;
   }
-
-  .about-intro::after { bottom: -20px; }
 
   .about-intro h1 {
     font-size: clamp(48px, 15vw, 58px);

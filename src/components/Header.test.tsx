@@ -20,6 +20,54 @@ async function openNavigation() {
 }
 
 describe('navigation and route focus', () => {
+  it.each(['.navigation__bar', '.navigation__plane', '.navigation__plane path'])(
+    'opens and closes from the non-interactive header surface: %s',
+    async (selector) => {
+      render(<MemoryRouter><App /></MemoryRouter>)
+      const surface = document.querySelector(selector)!
+      fireEvent.click(surface)
+      await waitFor(() => expect(document.activeElement).toBe(screen.getByRole('link', { name: 'Home' })))
+      expect(screen.getByRole('button', { name: 'Close navigation' }).getAttribute('aria-expanded')).toBe('true')
+      expect(document.body.classList.contains('menu-open')).toBe(true)
+      expect(document.querySelector('main')?.inert).toBe(true)
+
+      fireEvent.click(surface)
+      const toggle = screen.getByRole('button', { name: 'Open navigation' })
+      expect(toggle.getAttribute('aria-expanded')).toBe('false')
+      expect(document.activeElement).toBe(toggle)
+      expect(document.body.classList.contains('menu-open')).toBe(false)
+      expect(Boolean(document.querySelector('main')?.inert)).toBe(false)
+    },
+  )
+
+  it('handles clicks on the hamburger and X lines only once', async () => {
+    render(<MemoryRouter><App /></MemoryRouter>)
+    const toggle = screen.getByRole('button', { name: 'Open navigation' })
+    fireEvent.click(toggle.querySelector('span')!)
+    await waitFor(() => expect(document.activeElement).toBe(screen.getByRole('link', { name: 'Home' })))
+    fireEvent.click(toggle.querySelector('span')!)
+    expect(toggle.getAttribute('aria-expanded')).toBe('false')
+  })
+
+  it.each(['/', '/about'])('keeps the brand an independent Home link from %s', async (path) => {
+    render(<MemoryRouter initialEntries={[path]}><App /></MemoryRouter>)
+    const brand = screen.getByRole('link', { name: 'Santa Barbara Aeronautics' })
+    fireEvent.click(brand)
+    await waitFor(() => expect(document.querySelector('.home-page')).not.toBeNull())
+    expect(screen.getByRole('button', { name: 'Open navigation' }).getAttribute('aria-expanded')).toBe('false')
+
+    await openNavigation()
+    fireEvent.click(brand)
+    expect(screen.getByRole('button', { name: 'Open navigation' }).getAttribute('aria-expanded')).toBe('false')
+  })
+
+  it('does not toggle from the expanded menu background', async () => {
+    render(<MemoryRouter><App /></MemoryRouter>)
+    await openNavigation()
+    fireEvent.click(document.getElementById('navigation-menu')!)
+    expect(screen.getByRole('button', { name: 'Close navigation' }).getAttribute('aria-expanded')).toBe('true')
+  })
+
   it('closes on the current route and restores focus and scrolling', async () => {
     render(<MemoryRouter><App /></MemoryRouter>)
     await openNavigation()

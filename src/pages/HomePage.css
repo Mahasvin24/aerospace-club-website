@@ -1,56 +1,18 @@
+.site-shell:has(.home-page) {
+  --page-background: linear-gradient(142deg, rgb(12, 43, 86) -6%, rgb(5, 20, 48) 37%, rgb(0, 7, 22) 90%);
+}
+
 .home-page {
   position: relative;
   width: 100%;
   height: 100vh;
   min-height: 760px;
   overflow: hidden;
-  background: linear-gradient(142deg, rgb(12, 43, 86) -6%, rgb(5, 20, 48) 37%, rgb(0, 7, 22) 90%);
 }
 
 .site-shell:has(.home-page) .site-header {
   --header-top: 20px;
 }
-
-.home-grid {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-.home-grid span {
-  position: absolute;
-  display: block;
-  background: rgba(191, 226, 255, 0.13);
-}
-
-.home-grid__horizontal {
-  left: 0;
-  width: 100%;
-  height: 1px;
-}
-
-.home-grid__horizontal--top {
-  top: 0;
-  background: rgba(191, 226, 255, 0.18) !important;
-}
-
-.home-grid__horizontal--one { top: 253px; }
-.home-grid__horizontal--two { top: 507px; }
-
-.home-grid__horizontal--three {
-  bottom: 0;
-  background: rgba(191, 226, 255, 0.18) !important;
-}
-
-.home-grid__vertical {
-  top: 0;
-  bottom: 0;
-  width: 1px;
-}
-
-.home-grid__vertical--left { left: 20.9%; }
-.home-grid__vertical--center { left: 50%; }
-.home-grid__vertical--right { left: 77.75%; }
 
 .home-blueprint {
   position: absolute;
@@ -184,12 +146,6 @@
     width: calc(100% - 40px);
     height: 48%;
   }
-
-  .home-grid__vertical--left { left: 29%; }
-  .home-grid__vertical--center { display: none; }
-  .home-grid__vertical--right { left: 71%; }
-  .home-grid__horizontal--one { top: 26%; }
-  .home-grid__horizontal--two { top: 70%; }
 
   .home-marquee {
     --marquee-size: clamp(70px, 23vw, 146px);
