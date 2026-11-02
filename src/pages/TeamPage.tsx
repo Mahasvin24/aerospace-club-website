@@ -12,12 +12,12 @@ const executiveRows: TeamMember[][] = [
     {
       name: 'Tony Ruelas',
       role: 'President',
-      image: '/assets/team/tony-ruelas.png',
+      image: '/assets/team/tony-ruelas.jpeg',
     },
     {
       name: 'Yael Carranza',
       role: 'Vice President',
-      image: '/assets/team/yael-carranza.png',
+      image: '/assets/team/yael-carranza.jpeg',
       imagePosition: 'top',
     },
   ],
@@ -25,16 +25,17 @@ const executiveRows: TeamMember[][] = [
     {
       name: 'Grace Holtzclaw',
       role: 'Technology Director',
-      image: '/assets/team/grace-holtzclaw.png',
+      image: '/assets/team/grace-holtzclaw.jpeg',
     },
     {
       name: 'Luis Martinez',
       role: 'Financial Director',
-      image: '/assets/team/luis-martinez.png',
+      image: '/assets/team/luis-martinez.jpeg',
     },
     {
       name: 'Amy McGraw',
       role: 'Administrative Director',
+      image: '/assets/team/amy-mcgraw.jpeg',
     },
   ],
 ]
@@ -44,7 +45,7 @@ const chairRows: TeamMember[][] = [
     {
       name: 'Ana Shrivastava',
       role: 'Creative Media & Design Chair',
-      image: '/assets/team/ana-shrivastava.png',
+      image: '/assets/team/ana-shrivastava.jpeg',
     },
     {
       name: 'Vacant',
@@ -58,25 +59,25 @@ const projectLeadRows: TeamMember[][] = [
     {
       name: 'Luis (Tony) Mendoza',
       role: 'Skyscout System Integration Lead',
-      image: '/assets/team/luis-tony-mendoza.png',
+      image: '/assets/team/luis-tony-mendoza.jpeg',
     },
     {
       name: 'Parker Johnston',
       role: 'Research & Development PCB Design Lead',
-      image: '/assets/team/parker-johnston.png',
+      image: '/assets/team/parker-johnston.jpeg',
     },
   ],
   [
     {
       name: 'Isaac Perez-Aguineca',
       role: 'Condor Project Lead',
-      image: '/assets/team/isaac-perez-aguineca.png',
+      image: '/assets/team/isaac-perez-aguineca.jpeg',
       imagePosition: 'top',
     },
     {
       name: 'Jacob Ismael',
       role: 'Research & Development Firmware Lead',
-      image: '/assets/team/jacob-ismael.png',
+      image: '/assets/team/jacob-ismael.jpeg',
       imagePosition: 'top',
     },
   ],
